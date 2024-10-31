@@ -36,9 +36,20 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} "${LIB_PATH}/SDL2.lib" "${LIB_PATH}/SDL2main.lib" "${LIB_PATH}/SDL2_image.lib")
 
 
-# Copy the .dll to the output directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    # Копіюємо необхідні .dll файли
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-    "${LIB_PATH}/SDL2.dll"
-    "${LIB_PATH}/SDL2_image.dll"
-    $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+        "${LIB_PATH}/SDL2.dll"
+        "${LIB_PATH}/SDL2_image.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+        
+    # Копіюємо файл config.json
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/Main/config.json"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+
+    # Копіюємо всю папку assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/Main/assets"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
+)
