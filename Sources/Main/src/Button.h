@@ -17,11 +17,11 @@ public:
 
     void draw() override;
     void update() override;
-    void takeFunction(const std::function<void(Args...)>& function);
+    void takeFunction(const std::function<ReturnType(Args...)>& function);
     bool checkPressed(int x, int y) const;
     void setPressed(bool press) { m_isButtonPressed = press; }
 
-    void triggerFunction(Args... args);
+    ReturnType triggerFunction(Args... args);
 
 protected:
     bool checkTextures() const override;
@@ -84,7 +84,7 @@ void ::Button<ReturnType, Args...>::update()
 }
 
 template <typename ReturnType, typename... Args>
-void ::Button<ReturnType, Args...>::takeFunction(const std::function<void(Args...)>& function)
+void ::Button<ReturnType, Args...>::takeFunction(const std::function<ReturnType(Args...)>& function)
 {
     m_callbackFunction = function;
 }
@@ -96,12 +96,12 @@ bool ::Button<ReturnType, Args...>::checkPressed(int x, int y) const
         (y >= m_rect.y && y <= m_rect.y + m_rect.h);
 }
 
-template <typename ReturnType, typename... Args>
-void ::Button<ReturnType, Args...>::triggerFunction(Args... args)
+template <typename ReturnType, typename ... Args>
+ReturnType Button<ReturnType, Args...>::triggerFunction(Args... args)
 {
     if (m_callbackFunction)
     {
-        m_callbackFunction(std::forward<Args>(args)...);
+        return m_callbackFunction(std::forward<Args>(args)...);
     }
     else
     {
@@ -109,6 +109,7 @@ void ::Button<ReturnType, Args...>::triggerFunction(Args... args)
             WARNING,
             "Callback function is not set for the button at position (" +
             std::to_string(m_rect.x) + ", " + std::to_string(m_rect.y) + ")");
+        return ReturnType();
     }
 }
 

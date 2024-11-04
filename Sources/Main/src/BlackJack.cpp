@@ -26,16 +26,17 @@ void BlackJack::run()
 
 void BlackJack::init()
 {
-    m_button = new Button<void, int>(
+    m_button = new Button<int, int>(
         100,
         100,
         100,
         100,
         cardAssets.testFront,
         cardAssets.TABLE_TEXTURE);
-    std::function<void(int)> func = [](int id)
+    std::function<int(int)> func = [](const int idd)
     {
-        std::cout << "Button pressed with ID: " << id << '\n';
+        std::cout << "Button pressed with ID: " << idd << '\n';
+        return idd;
     };
     m_button->takeFunction(func);
 }
@@ -59,7 +60,7 @@ void BlackJack::update()
             m_inputManager.getMouseCoord().y))
         {
             m_button->setPressed(true);
-            m_button->triggerFunction(id++);
+            std::cout << m_button->triggerFunction(id++) << '\n';
             std::this_thread::sleep_for(std::chrono::milliseconds(200));
         }
     }
