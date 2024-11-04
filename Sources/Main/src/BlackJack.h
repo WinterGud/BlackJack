@@ -23,7 +23,7 @@ private:
     std::shared_ptr<DrawableObject> m_obj;
     std::shared_ptr<Player> m_player;
     std::shared_ptr<UI> m_ui;
-    Button<int>* m_button;
+    Button<void, int>* m_button;
 
     int id = 0;
 

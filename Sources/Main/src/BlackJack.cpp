@@ -26,7 +26,7 @@ void BlackJack::run()
 
 void BlackJack::init()
 {
-    m_button = new Button<int>(
+    m_button = new Button<void, int>(
         100,
         100,
         100,
