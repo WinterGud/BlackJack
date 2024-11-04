@@ -1,7 +1,10 @@
 ﻿#pragma once
+#include "DrawableObject.h"
 
-class Board
+class Board : public DrawableObject
 {
 public:
+
+private:
     
 };

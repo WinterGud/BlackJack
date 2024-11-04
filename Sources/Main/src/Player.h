@@ -1,19 +1,20 @@
 ﻿#pragma once
+#include <list>
 #include <memory>
-#include <vector>
-
 #include "Card.h"
-#include "DrawableObject.h"
 
-class Player
+class Player 
 {
 public:
     Player(int balance = 1000);
     void update();
-    void draw();
+    void draw() const;
+    void takeCard(Card& card);
     int getBalance() const { return m_balance; }
     
 private:
     int m_balance;
-    std::shared_ptr<std::vector<Card>> m_listOfCards;
+    int m_amountPoints = 0;
+    std::list<std::shared_ptr<Card>> m_listOfCards;
+    
 };

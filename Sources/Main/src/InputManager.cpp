@@ -1,6 +1,6 @@
 ﻿#include "InputManager.h"
 
-#include "Constants.h"
+#include "Renderer.h"
 
 void InputManager::update()
 {
@@ -38,7 +38,7 @@ void InputManager::update()
             {
                 int newWidth = m_event.window.data1;
                 int newHeight = m_event.window.data2;
-                constants.resizeVindow(newWidth, newHeight);
+                Renderer::getInstance().getWindowParams().resizeWindow(newWidth, newHeight);
             }
         }
     }
