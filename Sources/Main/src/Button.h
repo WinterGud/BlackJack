@@ -20,15 +20,18 @@ public:
     void takeFunction(const std::function<ReturnType(Args...)>& function);
     bool checkPressed(int x, int y) const;
     void setPressed(bool press) { m_isButtonPressed = press; }
+    void lock() { m_isButtonLocked = true; }
+    void unLock() { m_isButtonLocked = false; }
 
     ReturnType triggerFunction(Args... args);
 
 protected:
-    bool checkTextures() const override;
+    void logTextures() const override;
 
     std::string m_pressedTexturePath;
     SDL_Texture* m_pressedTexture;
     bool m_isButtonPressed = false;
+    bool m_isButtonLocked = false;
 
 private:
     std::function<ReturnType(Args...)> m_callbackFunction;
@@ -99,29 +102,37 @@ bool ::Button<ReturnType, Args...>::checkPressed(int x, int y) const
 template <typename ReturnType, typename ... Args>
 ReturnType Button<ReturnType, Args...>::triggerFunction(Args... args)
 {
-    if (m_callbackFunction)
+    if (!m_isButtonLocked)
     {
-        return m_callbackFunction(std::forward<Args>(args)...);
-    }
-    else
-    {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
-            WARNING,
-            "Callback function is not set for the button at position (" +
-            std::to_string(m_rect.x) + ", " + std::to_string(m_rect.y) + ")");
-        return ReturnType();
+        if (m_callbackFunction)
+        {
+            return m_callbackFunction(std::forward<Args>(args)...);
+        }
+        else
+        {
+            Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+                WARNING,
+                "Callback function is not set for the button at position (" +
+                std::to_string(m_rect.x) + ", " + std::to_string(m_rect.y) + ")");
+            return ReturnType();
+        }
     }
 }
 
 template <typename ReturnType, typename... Args>
-bool ::Button<ReturnType, Args...>::checkTextures() const
+void::Button<ReturnType, Args...>::logTextures() const
 {
-    if (!DrawableObject::checkTextures() || !m_pressedTexture)
+    DrawableObject::logTextures();
+    if (!m_pressedTexture)
     {
         Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
             WARNING,
             "Texture could not be loaded: " + m_pressedTexturePath + "\nIMG_Error: " + IMG_GetError());
-        return false;
     }
-    return true;
+    else
+    {
+        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+            INFO,
+            "Texture was loaded successfully: " + m_pressedTexturePath);
+    }
 }

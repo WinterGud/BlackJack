@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <sstream>
+#include <string>
 
 enum class Suit
 {
@@ -10,53 +12,67 @@ enum class Suit
 
 enum class Rank
 {
-    Two = 2,
-    Three = 3,
-    Four = 4,
-    Five = 5,
-    Six = 6,
-    Seven = 7,
-    Eight = 8,
-    Nine = 9,
-    Ten = 10,
-    Jack = 10,
-    Queen = 10,
-    King = 10,
-    Ace = 11
+    Ace = 1,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six,
+    Seven,
+    Eight,
+    Nine,
+    Ten,
+    Jack,
+    Queen,
+    King,
 };
 
+inline std::string generateTexturePath(Suit suit, Rank rank) {
+    std::ostringstream pathStream;
+    pathStream << "..\\..\\..\\BlackJack\\Sources\\Main\\assets\\";
 
-
-inline const char* toString(const Suit e)
-{
-    switch (e)
-    {
-    case Suit::Hearts: return "Hearts";
-    case Suit::Diamonds: return "Diamonds";
-    case Suit::Clubs: return "Clubs";
-    case Suit::Spades: return "Spades";
-    default: return "unknown";
+    // Append suit prefix to the path
+    switch (suit) {
+    case Suit::Hearts: pathStream << "hearts_"; break;
+    case Suit::Diamonds: pathStream << "diamonds_"; break;
+    case Suit::Clubs: pathStream << "clubs_"; break;
+    case Suit::Spades: pathStream << "spades_"; break;
     }
+
+    // Append rank suffix to the path
+    if (rank == Rank::Ace) pathStream << "ace";
+    else if (rank == Rank::Two) pathStream << "2";
+    else if (rank == Rank::Three) pathStream << "3";
+    else if (rank == Rank::Four) pathStream << "4";
+    else if (rank == Rank::Five) pathStream << "5";
+    else if (rank == Rank::Six) pathStream << "6";
+    else if (rank == Rank::Seven) pathStream << "7";
+    else if (rank == Rank::Eight) pathStream << "8";
+    else if (rank == Rank::Nine) pathStream << "9";
+    else if (rank == Rank::Ten) pathStream << "10";
+    else if (rank == Rank::Jack) pathStream << "jack";
+    else if (rank == Rank::Queen) pathStream << "queen";
+    else if (rank == Rank::King) pathStream << "king";
+
+    pathStream << ".png";
+    return pathStream.str();
 }
 
-inline const char* toString(Rank e)
-{
-    switch (e)
-    {
-    case Rank::Two: return "Two";
-    case Rank::Three: return "Three";
-    case Rank::Four: return "Four";
-    case Rank::Five: return "Five";
-    case Rank::Six: return "Six";
-    case Rank::Seven: return "Seven";
-    case Rank::Eight: return "Eight";
-    case Rank::Nine: return "Nine";
-    case Rank::Ten: return "Ten";
-    case Rank::Jack: return "Jack";
-    case Rank::Queen: return "Queen";
-    case Rank::King: return "King";
-    case Rank::Ace: return "Ace";
-    default: return "unknown";
+inline int toInt(Rank rank) {
+    switch (rank) {
+    case Rank::Ace: return 1;
+    case Rank::Two: return 2;
+    case Rank::Three: return 3;
+    case Rank::Four: return 4;
+    case Rank::Five: return 5;
+    case Rank::Six: return 6;
+    case Rank::Seven: return 7;
+    case Rank::Eight: return 8;
+    case Rank::Nine: return 9;
+    case Rank::Ten: 
+    case Rank::Jack: 
+    case Rank::Queen: 
+    case Rank::King: return 10;
+    default: return 0;
     }
 }
-

@@ -11,6 +11,7 @@ public:
     DrawableObject& operator=(const DrawableObject& other);
     virtual ~DrawableObject();
 
+    void moveAnimation(double targetX, double targetY, double duration);
     virtual void draw();
     virtual void update() = 0;
     
@@ -22,6 +23,6 @@ protected:
     SDL_Rect m_rect;
     SDL_Texture* m_mainTexture;
 
-    virtual bool checkTextures() const;
+    virtual void logTextures() const;
 };
 

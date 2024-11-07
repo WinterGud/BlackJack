@@ -17,7 +17,7 @@ public:
         {
             WINDOW_WIDTH = width;
             WINDOW_HEIGHT = height;
-            CARD_WIDTH = WINDOW_WIDTH / 4;
+            CARD_WIDTH = WINDOW_WIDTH / 6;
             CARD_HEIGHT = WINDOW_HEIGHT / 4;
         }
         int getWindowWidth() const { return WINDOW_WIDTH; }
@@ -29,7 +29,7 @@ public:
     private:
         int WINDOW_WIDTH = 800;
         int WINDOW_HEIGHT = 600;
-        int CARD_WIDTH = WINDOW_WIDTH / 4;
+        int CARD_WIDTH = WINDOW_WIDTH / 6;
         int CARD_HEIGHT = WINDOW_HEIGHT / 4;
     };
 

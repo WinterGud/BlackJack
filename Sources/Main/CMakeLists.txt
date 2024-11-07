@@ -33,7 +33,7 @@ add_executable(${PROJECT_NAME}
     ${CPP_SOURCES} 
     ${CPP_MAIN})
 
-target_link_libraries(${PROJECT_NAME} "${LIB_PATH}/SDL2.lib" "${LIB_PATH}/SDL2main.lib" "${LIB_PATH}/SDL2_image.lib")
+target_link_libraries(${PROJECT_NAME} "${LIB_PATH}/SDL2.lib" "${LIB_PATH}/SDL2main.lib" "${LIB_PATH}/SDL2_image.lib" "${LIB_PATH}/SDL2_ttf.lib" "${LIB_PATH}/SDL2_mixer.lib")
 
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
@@ -41,6 +41,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${LIB_PATH}/SDL2.dll"
         "${LIB_PATH}/SDL2_image.dll"
+        "${LIB_PATH}/SDL2_ttf.dll"
+        "${LIB_PATH}/SDL2_mixer.dll"
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
         
     # Копіюємо файл config.json
@@ -52,4 +54,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/Main/assets"
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
+    # Копіюємо всю папку fonts
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/Main/fonts"
+        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/fonts"
 )

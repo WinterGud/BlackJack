@@ -5,33 +5,36 @@
 #include "Renderer.h"
 #include "TextureCache.h"
 
-
-Card::Card(const std::string& texturePath)
+Card::Card(Suit suit, Rank rank, const std::string& texturePath)
     : DrawableObject(
-      100,
-      100,
-      Renderer::getInstance().getWindowParams().getCardWidth(),
-      Renderer::getInstance().getWindowParams().getCardHeight(),
-      texturePath)
-    , m_backTexture(TexturesCache::getInstance().getTexture(texturePath))
+          Renderer::getInstance().getWindowParams().getCardWidth(),
+          Renderer::getInstance().getWindowParams().getCardHeight(),
+          Renderer::getInstance().getWindowParams().getCardWidth(),
+          Renderer::getInstance().getWindowParams().getCardHeight(),
+          texturePath)
+      , m_backTexturePath(cardAssets.CARD_BACK_TEXTURE)
+      , m_backTexture(TexturesCache::getInstance().getTexture(m_backTexturePath))
+      , m_suit(suit)
+      , m_rank(rank)
 {
     if (!m_backTexture)
     {
         Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
-            WARNING, "Texture could not be loaded: " + cardAssets.CARD_BACK_TEXTURE + "\nIMG_Error: " + IMG_GetError());
+            WARNING, "Texture could not be loaded: " + m_backTexturePath + "\nIMG_Error: " + IMG_GetError());
     }
 }
 
-Card::Card(int x, int y, const std::string& texturePath)
+Card::Card(Suit suit, Rank rank, int x, int y, const std::string& texturePath)
     : DrawableObject(
-      x,
-      y,
-      Renderer::getInstance().getWindowParams().getCardWidth(),
-      Renderer::getInstance().getWindowParams().getCardHeight(),
-      texturePath)
-    , m_backTexture(IMG_LoadTexture(
-      Renderer::getInstance().getRenderer(),
-      cardAssets.CARD_BACK_TEXTURE.c_str()))
+          x,
+          y,
+          Renderer::getInstance().getWindowParams().getCardWidth(),
+          Renderer::getInstance().getWindowParams().getCardHeight(),
+          texturePath)
+      , m_backTexturePath(cardAssets.CARD_BACK_TEXTURE)
+      , m_backTexture(TexturesCache::getInstance().getTexture(m_backTexturePath))
+      , m_suit(suit)
+      , m_rank(rank)
 {
     if (!m_backTexture)
     {

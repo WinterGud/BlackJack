@@ -1,5 +1,6 @@
 ﻿#include "Renderer.h"
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <string>
 #include "Logger.h"
 
@@ -44,6 +45,10 @@ Renderer::Renderer()
     else if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
         Logger::getInstance(m_WindowParams.LOG_PATH).log(WARNING, "SDL_image could not initialize! IMG_Error: " + std::string(IMG_GetError()) + '\n');
+    }
+    else if (TTF_Init() == -1)
+    {
+        Logger::getInstance(m_WindowParams.LOG_PATH).log(WARNING, "SDL_TTF could not initialize! TTF_Error: " + std::string(TTF_GetError()) + '\n');
     }
     else
     {
