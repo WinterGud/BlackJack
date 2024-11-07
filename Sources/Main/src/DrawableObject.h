@@ -5,8 +5,8 @@
 class DrawableObject
 {
 public:
-    DrawableObject(int x, int y, int w, int h, std::string texturePath);
-    DrawableObject(SDL_Rect rect, std::string mainTexturePath);
+    DrawableObject(int x, int y, int w, int h, const std::string& mainTexturePath);
+    DrawableObject(SDL_Rect rect, const std::string& mainTexturePath);
     DrawableObject(const DrawableObject& other);
     DrawableObject& operator=(const DrawableObject& other);
     virtual ~DrawableObject();

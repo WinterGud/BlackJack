@@ -1,15 +1,15 @@
 ﻿#include "Board.h"
 #include <random>
-#include "CardAssets.h"
+#include "constants.h"
 #include "Renderer.h"
 
 Board::Board()
     : DrawableObject(
         0,
         0,
-        Renderer::getInstance().getWindowParams().getWindowWidth(),
-        Renderer::getInstance().getWindowParams().getWindowHeight(),
-        cardAssets.TABLE_TEXTURE
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
+        TABLE_TEXTURE
     )
 {
     
@@ -47,12 +47,12 @@ void Board::update()
 std::shared_ptr<Card> Board::getCard()
 {
     if (m_listOfCards.empty()) {
-        return nullptr; // Перевірка на випадок, якщо колода порожня
+        return nullptr;
     }
 
-    auto card = m_listOfCards.back(); // Отримуємо останню карту
-    m_listOfCards.pop_back(); // Видаляємо карту з колоди
-    return card; // Повертаємо карту як shared_ptr<Card>
+    auto card = m_listOfCards.back();
+    m_listOfCards.pop_back();
+    return card;
 }
 
 

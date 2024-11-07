@@ -1,25 +1,25 @@
 ﻿#include "Card.h"
 #include <SDL_image.h>
-#include "CardAssets.h"
+#include "constants.h"
 #include "Logger.h"
 #include "Renderer.h"
 #include "TextureCache.h"
 
 Card::Card(Suit suit, Rank rank, const std::string& texturePath)
     : DrawableObject(
-          Renderer::getInstance().getWindowParams().getCardWidth(),
-          Renderer::getInstance().getWindowParams().getCardHeight(),
-          Renderer::getInstance().getWindowParams().getCardWidth(),
-          Renderer::getInstance().getWindowParams().getCardHeight(),
+          WINDOW_WIDTH,
+          WINDOW_HEIGHT,
+          CARD_WIDTH,
+          CARD_HEIGHT,
           texturePath)
-      , m_backTexturePath(cardAssets.CARD_BACK_TEXTURE)
+      , m_backTexturePath(CARD_BACK_TEXTURE)
       , m_backTexture(TexturesCache::getInstance().getTexture(m_backTexturePath))
       , m_suit(suit)
       , m_rank(rank)
 {
     if (!m_backTexture)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING, "Texture could not be loaded: " + m_backTexturePath + "\nIMG_Error: " + IMG_GetError());
     }
 }
@@ -28,18 +28,18 @@ Card::Card(Suit suit, Rank rank, int x, int y, const std::string& texturePath)
     : DrawableObject(
           x,
           y,
-          Renderer::getInstance().getWindowParams().getCardWidth(),
-          Renderer::getInstance().getWindowParams().getCardHeight(),
+          CARD_WIDTH,
+          CARD_HEIGHT,
           texturePath)
-      , m_backTexturePath(cardAssets.CARD_BACK_TEXTURE)
+      , m_backTexturePath(CARD_BACK_TEXTURE)
       , m_backTexture(TexturesCache::getInstance().getTexture(m_backTexturePath))
       , m_suit(suit)
       , m_rank(rank)
 {
     if (!m_backTexture)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
-            WARNING, "Texture could not be loaded: " + cardAssets.CARD_BACK_TEXTURE + "\nIMG_Error: " + IMG_GetError());
+        Logger::getInstance(LOG_PATH).log(
+            WARNING, "Texture could not be loaded: " + CARD_BACK_TEXTURE + "\nIMG_Error: " + IMG_GetError());
     }
 }
 

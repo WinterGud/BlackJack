@@ -12,7 +12,6 @@ public:
     BlackJack();
     ~BlackJack();
     void run();
-    void push();
 
 private:
     void init() const;

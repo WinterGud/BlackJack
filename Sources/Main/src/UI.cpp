@@ -1,38 +1,36 @@
 ﻿#include "UI.h"
 #include <thread>
-#include "CardAssets.h"
 #include <SDL_ttf.h>
-
-#include "Fonts.h"
 
 namespace
 {
-    const int BUTTON_WIDTH = Renderer::getInstance().getWindowParams().getWindowWidth() / 8;
-    const int BUTTON_HEIGHT = Renderer::getInstance().getWindowParams().getWindowHeight() / 8;
-    const int HIT_BUTTON_X_POSITION = Renderer::getInstance().getWindowParams().getWindowWidth() / 1.2;
-    const int HIT_BUTTON_Y_POSITION = Renderer::getInstance().getWindowParams().getWindowHeight() / 3;
-    const int STAND_BUTTON_X_POSITION = Renderer::getInstance().getWindowParams().getWindowWidth() / 1.2;
-    const int STAND_BUTTON_Y_POSITION = Renderer::getInstance().getWindowParams().getWindowHeight() / 3 + BUTTON_HEIGHT;
-    const int INCREASE_BET_BUTTON_X_POSITION = Renderer::getInstance().getWindowParams().getWindowWidth() / 15;
-    const int INCREASE_BET_BUTTON_Y_POSITION = Renderer::getInstance().getWindowParams().getWindowHeight() / 3;
-    const int DECREASE_BET_BUTTON_X_POSITION = Renderer::getInstance().getWindowParams().getWindowWidth() / 15;
-    const int DECREASE_BET_BUTTON_Y_POSITION = Renderer::getInstance().getWindowParams().getWindowHeight() / 3 + BUTTON_HEIGHT;
-    const std::string HIT_BUTTON_PATH = cardAssets.testFront;
-    const std::string HIT_BUTTON_PRESSED_PATH = cardAssets.CARD_BACK_TEXTURE;
-    const std::string STAND_BUTTON_PATH = cardAssets.TABLE_TEXTURE;
-    const std::string STAND_BUTTON_PRESSED_PATH = cardAssets.CARD_BACK_TEXTURE;
-    const std::string INCREASE_BET_BUTTON_PATH = cardAssets.CARD_BACK_TEXTURE;
-    const std::string INCREASE_BET_BUTTON_PRESSED_PATH = cardAssets.CARD_BACK_TEXTURE;
-    const std::string DECREASE_BET_BUTTON_PATH = cardAssets.CARD_BACK_TEXTURE;
-    const std::string DECREASE_BET_BUTTON_PRESSED_PATH = cardAssets.CARD_BACK_TEXTURE;
+    constexpr int BUTTON_WIDTH = WINDOW_WIDTH / 8;
+    constexpr int BUTTON_HEIGHT = WINDOW_HEIGHT / 8;
+    constexpr int HIT_BUTTON_X_POSITION = WINDOW_WIDTH / 1.2;
+    constexpr int HIT_BUTTON_Y_POSITION = WINDOW_HEIGHT / 3;
+    constexpr int STAND_BUTTON_X_POSITION = WINDOW_WIDTH / 1.2;
+    constexpr int STAND_BUTTON_Y_POSITION = WINDOW_HEIGHT / 3 + BUTTON_HEIGHT;
+    constexpr int INCREASE_BET_BUTTON_X_POSITION = WINDOW_WIDTH / 15;
+    constexpr int INCREASE_BET_BUTTON_Y_POSITION = WINDOW_HEIGHT / 3;
+    constexpr int DECREASE_BET_BUTTON_X_POSITION = WINDOW_WIDTH / 15;
+    constexpr int DECREASE_BET_BUTTON_Y_POSITION = WINDOW_HEIGHT / 3 + BUTTON_HEIGHT;
+    const std::string HIT_BUTTON_PATH = BASE_PATH + "assets\\hit.png";
+    const std::string HIT_BUTTON_PRESSED_PATH = BASE_PATH + "assets\\hit.png";
+    const std::string STAND_BUTTON_PATH = BASE_PATH + "assets\\stand.png";
+    const std::string STAND_BUTTON_PRESSED_PATH = BASE_PATH + "assets\\stand.png";
+    const std::string INCREASE_BET_BUTTON_PATH = BASE_PATH + "assets\\plus5.png";
+    const std::string INCREASE_BET_BUTTON_PRESSED_PATH = BASE_PATH + "assets\\plus5.png";
+    const std::string DECREASE_BET_BUTTON_PATH = BASE_PATH + "assets\\minus5.png";
+    const std::string DECREASE_BET_BUTTON_PRESSED_PATH = BASE_PATH + "assets\\minus5.png";
 }
 
 UI::UI()
 {
-    m_font = TTF_OpenFont(fonts.BaseFont.c_str(), 24);
+    TTF_Init();
+    m_font = TTF_OpenFont(FontPath.c_str(), 24);
     if (!m_font)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             ERROR,
             "Failed to load font: " + std::string(TTF_GetError())
         );

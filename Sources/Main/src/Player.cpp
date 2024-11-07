@@ -1,4 +1,6 @@
 ﻿#include "Player.h"
+
+#include "constants.h"
 #include "Renderer.h"
 
 Player::Player(int balance, int x, int y)
@@ -29,8 +31,8 @@ void Player::takeCard(Card& card)
 
 void Player::centerCards()
 {
-    int windowWidth = Renderer::getInstance().getWindowParams().getWindowWidth();
-    int cardWidth = Renderer::getInstance().getWindowParams().getCardWidth();
+    int windowWidth = WINDOW_WIDTH;
+    int cardWidth = CARD_WIDTH;
 
     int totalCardsWidth = cardWidth + (cardWidth / 2.5) * (m_listOfCards.size() - 1);
     int startX = (windowWidth - totalCardsWidth) / 2;

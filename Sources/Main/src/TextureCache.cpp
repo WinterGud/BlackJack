@@ -1,6 +1,7 @@
 ﻿#include "TextureCache.h"
 #include <SDL_image.h>
 
+#include "constants.h"
 #include "Logger.h"
 #include "Renderer.h"
 
@@ -25,7 +26,7 @@ SDL_Texture* TexturesCache::getTexture(const std::string& texturePath)
     }
     else
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING, "Texture could not be loaded: " + texturePath + "\nIMG_Error: " + IMG_GetError());
     }
     return texture;

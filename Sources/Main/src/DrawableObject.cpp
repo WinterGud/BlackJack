@@ -4,19 +4,20 @@
 #include <SDL_image.h>
 #include <thread>
 
+#include "constants.h"
 #include "Logger.h"
 #include "Renderer.h"
 #include "TextureCache.h"
 
-DrawableObject::DrawableObject(int x, int y, int w, int h, std::string texturePath)
-    : m_mainTexturePath(std::move(texturePath))
+DrawableObject::DrawableObject(int x, int y, int w, int h, const std::string& mainTexturePath)
+    : m_mainTexturePath(std::move(mainTexturePath))
       , m_rect{x, y, w, h}
       , m_mainTexture(TexturesCache::getInstance().getTexture(m_mainTexturePath))
 {
     DrawableObject::logTextures();
 }
 
-DrawableObject::DrawableObject(SDL_Rect rect, std::string mainTexturePath)
+DrawableObject::DrawableObject(SDL_Rect rect, const std::string& mainTexturePath)
     : m_mainTexturePath(std::move(mainTexturePath))
       , m_rect(rect)
 {
@@ -107,7 +108,7 @@ void DrawableObject::draw()
     }
     else
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
             std::string("\nIMG_Error: ") + IMG_GetError());
     }
@@ -117,13 +118,13 @@ void DrawableObject::logTextures() const
 {
     if (!m_mainTexture)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
             "Texture could not be loaded: " + m_mainTexturePath + "\nIMG_Error: " + IMG_GetError());
     }
     else
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             INFO,
             "Texture was loaded successfully: " + m_mainTexturePath);
     }

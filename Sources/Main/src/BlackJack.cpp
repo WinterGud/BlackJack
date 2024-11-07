@@ -5,10 +5,10 @@
 
 namespace 
 {
-    const int PLAYER_CENTER_X = (Renderer::getInstance().getWindowParams().getWindowWidth() - Renderer::getInstance().getWindowParams().getCardWidth()) / 2;
-    const int PLAYER_CENTER_Y = Renderer::getInstance().getWindowParams().getWindowHeight() / 1.8;
-    const int DEALER_CENTER_X = PLAYER_CENTER_X;
-    const int DEALER_CENTER_Y = Renderer::getInstance().getWindowParams().getWindowHeight() * 0.2;
+    constexpr int PLAYER_CENTER_X = (WINDOW_WIDTH - CARD_WIDTH) / 2;
+    constexpr int PLAYER_CENTER_Y = WINDOW_HEIGHT / 1.8;
+    constexpr int DEALER_CENTER_X = PLAYER_CENTER_X;
+    constexpr int DEALER_CENTER_Y = WINDOW_HEIGHT * 0.2;
 }
 
 BlackJack::BlackJack()
@@ -33,19 +33,12 @@ void BlackJack::run()
     {
         update();
         draw();
-        
     }
-}
-
-void BlackJack::push()
-{
 }
 
 void BlackJack::init() const
 {
-    m_soundManager->loadBackgroundMusic(MUSIC_PATH);
-    m_soundManager->loadButtonPressSound(BUTTON_PRESS_SOUND_PATH);
-    m_soundManager->playBackgroundMusic(-1);
+    m_soundManager->init();
     std::function<void()> hitFunc = [&]()
     {
         m_soundManager->playButtonPressSound();

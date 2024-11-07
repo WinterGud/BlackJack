@@ -38,7 +38,6 @@ void InputManager::update()
             {
                 int newWidth = m_event.window.data1;
                 int newHeight = m_event.window.data2;
-                Renderer::getInstance().getWindowParams().resizeWindow(newWidth, newHeight);
             }
         }
     }

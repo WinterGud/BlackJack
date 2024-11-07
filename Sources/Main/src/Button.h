@@ -6,12 +6,13 @@
 #include "Renderer.h"
 #include "TextureCache.h"
 #include <functional>
+#include "constants.h"
 
 template <typename ReturnType, typename... Args>
 class Button : public DrawableObject
 {
 public:
-    Button(int x, int y, int w, int h, const std::string& mainTexturePath, std::string pressedTexturePath);
+    Button(int x, int y, int w, int h, const std::string& mainTexturePath, const std::string& pressedTexturePath);
     Button(const Button& other);
     ~Button() override;
 
@@ -40,7 +41,7 @@ private:
 
 template <typename ReturnType, typename... Args>
 ::Button<ReturnType, Args...>::Button(int x, int y, int w, int h, const std::string& mainTexturePath,
-                                                 std::string pressedTexturePath)
+                                                 const std::string& pressedTexturePath)
     : DrawableObject(x, y, w, h, mainTexturePath)
       , m_pressedTexturePath(std::move(pressedTexturePath))
       , m_pressedTexture(TexturesCache::getInstance().getTexture(m_pressedTexturePath))
@@ -110,7 +111,7 @@ ReturnType Button<ReturnType, Args...>::triggerFunction(Args... args)
         }
         else
         {
-            Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+            Logger::getInstance(LOG_PATH).log(
                 WARNING,
                 "Callback function is not set for the button at position (" +
                 std::to_string(m_rect.x) + ", " + std::to_string(m_rect.y) + ")");
@@ -125,13 +126,13 @@ void::Button<ReturnType, Args...>::logTextures() const
     DrawableObject::logTextures();
     if (!m_pressedTexture)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
             "Texture could not be loaded: " + m_pressedTexturePath + "\nIMG_Error: " + IMG_GetError());
     }
     else
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             INFO,
             "Texture was loaded successfully: " + m_pressedTexturePath);
     }

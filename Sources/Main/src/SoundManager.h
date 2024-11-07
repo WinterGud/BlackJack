@@ -9,6 +9,8 @@ class SoundManager
 public:
     SoundManager();
     ~SoundManager();
+
+    void init();
     
     void loadButtonPressSound(const std::string& path);
     void playButtonPressSound() const;

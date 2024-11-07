@@ -1,5 +1,5 @@
 ﻿#include "SoundManager.h"
-
+#include "constants.h"
 #include "Logger.h"
 #include "Renderer.h"
 
@@ -7,17 +7,18 @@ SoundManager::SoundManager()
 {
     if (Mix_Init(MIX_INIT_MP3) == 0)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
             "SDL_mixer initialization failed: " + std::string(Mix_GetError()) + '\n');
     }
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
             "SDL_mixer could not initialize! SDL_mixer Error: " + std::string(Mix_GetError()) + '\n');
     }
+
 }
 
 SoundManager::~SoundManager()
@@ -34,12 +35,19 @@ SoundManager::~SoundManager()
     Mix_Quit();
 }
 
+void SoundManager::init()
+{
+    loadButtonPressSound(BUTTON_PRESS_SOUND_PATH);
+    loadBackgroundMusic(MUSIC_PATH);
+    playBackgroundMusic();
+}
+
 void SoundManager::loadButtonPressSound(const std::string& path)
 {
     m_buttonPressSound = Mix_LoadWAV(path.c_str());
     if (!m_buttonPressSound)
     {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
          "Failed to load button press sound: " + std::string(Mix_GetError()) + '\n');
     }
@@ -56,7 +64,7 @@ void SoundManager::loadBackgroundMusic(const std::string& path)
 {
     m_backgroundMusic = Mix_LoadMUS(path.c_str());
     if (!m_backgroundMusic) {
-        Logger::getInstance(Renderer::getInstance().getWindowParams().LOG_PATH).log(
+        Logger::getInstance(LOG_PATH).log(
             WARNING,
          "Failed to load background music: " + std::string(Mix_GetError()) + '\n');
     }
