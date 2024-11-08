@@ -44,12 +44,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         "${LIB_PATH}/SDL2_ttf.dll"
         "${LIB_PATH}/SDL2_mixer.dll"
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
-        
-    # Копіюємо файл config.json
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_SOURCE_DIR}/Main/config.json"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>
-
     # Копіюємо всю папку assets
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/Main/assets"
